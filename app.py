@@ -43,8 +43,19 @@ st.markdown(
         }
 
         .stApp { background: var(--mist); color: var(--ink); }
-        [data-testid="stSidebar"] { background: #eaf0f4; border-right: 1px solid var(--line); }
-        [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3 { color: var(--navy); }
+        [data-testid="stSidebar"] {
+            background: #eaf0f4;
+            border-right: 1px solid var(--line);
+            color: var(--ink);
+        }
+        [data-testid="stSidebar"] h2,
+        [data-testid="stSidebar"] h3 { color: var(--navy); }
+        [data-testid="stSidebar"] [data-testid="stWidgetLabel"] p,
+        [data-testid="stSidebar"] [data-testid="stCaptionContainer"] p,
+        [data-testid="stSidebar"] details summary,
+        [data-testid="stSidebar"] label {
+            color: var(--ink) !important;
+        }
         .block-container { padding-top: 2rem; padding-bottom: 2.5rem; max-width: 1240px; }
 
         .project-hero {
