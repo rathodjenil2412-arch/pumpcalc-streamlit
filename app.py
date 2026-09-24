@@ -12,10 +12,14 @@ import streamlit as st
 from pump_calculations import PumpInputs, calculate_pump, system_curve, validate_inputs
 
 
-# Edit these values before the final college submission.
-DEFAULT_STUDENT_NAME = "Jenil Rathod"
-DEFAULT_ENROLLMENT_NUMBER = "Enter enrollment number"
-DEFAULT_GROUP_NUMBER = "Individual"
+# Team details supplied for the final college submission.
+TEAM_MEMBERS = (
+    ("FATEH SAD ASHRAFRASUL", "25012250610079"),
+    ("FATTEH AKRAM ASLAM", "25012250610078"),
+    ("GHANCHI SAHIL SALIMBHAI", "25012250610047"),
+    ("MEMADU AHAMAD ABDULRAHEMAN", "25012250610077"),
+)
+DEFAULT_GROUP_NUMBER = "Group Project — 4 Members"
 DEFAULT_COLLEGE_NAME = "LJ Polytechnic, Ahmedabad"
 DEFAULT_COURSE_NAME = "Diploma in Mechanical Engineering — Semester 3"
 
@@ -122,6 +126,19 @@ st.markdown(
             font-size: 0.88rem;
         }
         .footer-card b { color: #ffffff; }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.55rem;
+            margin-top: 0.8rem;
+        }
+        .team-member {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.13);
+            border-radius: 5px;
+            padding: 0.65rem 0.75rem;
+        }
+        .team-member span { color: #bfd0dc; }
         .small-muted { color: var(--muted); font-size: 0.84rem; }
         .stTabs [data-baseweb="tab-list"] { gap: 0.25rem; }
         .stTabs [data-baseweb="tab"] { background: #e7edf1; border-radius: 6px 6px 0 0; }
@@ -130,6 +147,7 @@ st.markdown(
         @media (max-width: 700px) {
             .block-container { padding-top: 1rem; }
             .project-hero h1 { font-size: 1.55rem; }
+            .team-grid { grid-template-columns: 1fr; }
         }
     </style>
     """,
@@ -184,12 +202,11 @@ with st.sidebar:
         "Motor service factor", min_value=1.00, max_value=1.50, value=1.15, step=0.05
     )
 
-    with st.expander("Project identity", expanded=False):
-        student_name = st.text_input("Student name", value=DEFAULT_STUDENT_NAME)
-        enrollment_number = st.text_input(
-            "Enrollment number", value=DEFAULT_ENROLLMENT_NUMBER
-        )
-        group_number = st.text_input("Group number", value=DEFAULT_GROUP_NUMBER)
+    with st.expander("Team details", expanded=False):
+        st.caption(DEFAULT_GROUP_NUMBER)
+        for member_name, enrollment_number in TEAM_MEMBERS:
+            st.write(f"**{member_name}**")
+            st.caption(f"Enrollment: {enrollment_number}")
 
     with st.expander("Model assumptions", expanded=False):
         st.write("Fluid: water")
@@ -515,17 +532,22 @@ with viva_tab:
         )
 
 
-safe_student = escape(student_name.strip() or "Not entered")
-safe_enrollment = escape(enrollment_number.strip() or "Not entered")
-safe_group = escape(group_number.strip() or "Not entered")
+team_cards = "".join(
+    (
+        '<div class="team-member">'
+        f"<b>{escape(member_name)}</b><br>"
+        f"<span>Enrollment: {escape(enrollment_number)}</span>"
+        "</div>"
+    )
+    for member_name, enrollment_number in TEAM_MEMBERS
+)
 st.markdown(
     f"""
     <div class="footer-card">
         <b>{escape(DEFAULT_COLLEGE_NAME)}</b><br>
         {escape(DEFAULT_COURSE_NAME)}<br><br>
-        Student: <b>{safe_student}</b> &nbsp;·&nbsp;
-        Enrollment: <b>{safe_enrollment}</b> &nbsp;·&nbsp;
-        Group: <b>{safe_group}</b>
+        <b>{escape(DEFAULT_GROUP_NUMBER)}</b>
+        <div class="team-grid">{team_cards}</div>
     </div>
     """,
     unsafe_allow_html=True,
