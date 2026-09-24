@@ -60,12 +60,11 @@ python -m unittest discover -s tests -v
 
 The default values reproduce the solved case in `MANUAL_TEST_CASE.md`.
 
-## Add final student details
+## Team details
 
-At the top of `app.py`, edit these values before submission:
+The submitted team information is stored near the top of `app.py` in:
 
-- `DEFAULT_STUDENT_NAME`
-- `DEFAULT_ENROLLMENT_NUMBER`
+- `TEAM_MEMBERS`
 - `DEFAULT_GROUP_NUMBER`
 - `DEFAULT_COLLEGE_NAME`
 - `DEFAULT_COURSE_NAME`
